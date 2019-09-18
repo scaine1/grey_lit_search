@@ -15,6 +15,13 @@ def load_sample_result():
 
 
 @pytest.fixture()
+def load_sample_result_no_pdf():
+    with open(test_dir.joinpath("sample_result_no_pdf.html"), "r") as fid:
+        webpage_data = fid.readline()
+    return soup(webpage_data, "html.parser").find("div", {"class": "g"})
+
+
+@pytest.fixture()
 def load_sample_result_with_query():
     with open(test_dir.joinpath("sample_result_with_query_string.html"), "r") as fid:
         webpage_data = fid.readline()
@@ -40,6 +47,13 @@ def test_google_result_links(load_sample_result):
 def test_google_result_primary_link(load_sample_result):
     result = GoogleResult(load_sample_result)
     assert result.primary_link == "http://www.africau.edu/images/default/sample.pdf"
+
+
+def test_google_result_primary_link_no_pdf(load_sample_result_no_pdf):
+    result = GoogleResult(load_sample_result_no_pdf)
+    assert result.primary_link == (
+        "https://file-examples.com/index.php/sample-documents-download/sample-pdf-download/"
+    )
 
 
 def test_google_result_primary_link_remove_query_string(load_sample_result_with_query):
