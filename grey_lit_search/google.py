@@ -1,4 +1,5 @@
 import logging
+import os
 from bs4 import BeautifulSoup as soup
 
 """
@@ -87,6 +88,20 @@ class GoogleResult:
                 links.append(link["href"])
         assert len(links) == 1
         return links[0]
+
+    @property
+    def do_download(self):
+        """
+        Bool to determine if we should attempt to download the file
+        currently just on pdf but could change it to other file types
+
+        returns: bool
+        """
+
+        dl = False
+        if ".pdf" in os.path.basename(self.primary_link).lower():
+            dl = True
+        return dl
 
 
 def get_search_results(webpage):

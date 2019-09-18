@@ -83,3 +83,13 @@ def test_individual_search_results(load_sample_search):
         None,
     ]
     assert titles == expected_titles
+
+
+def test_do_download_is_True(load_sample_result):
+    result = GoogleResult(load_sample_result)
+    assert result.do_download
+
+
+def test_do_download_is_False(load_sample_result_no_pdf):
+    result = GoogleResult(load_sample_result_no_pdf)
+    assert not result.do_download
