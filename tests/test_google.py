@@ -34,6 +34,13 @@ def load_sample_search():
         return "".join(fid.readlines())
 
 
+@pytest.fixture()
+def load_people_also_ask():
+    with open(test_dir.joinpath("people_also_ask.html"), "r") as fid:
+        webpage_data = fid.readline()
+    return soup(webpage_data, "html.parser").find("div", {"class": "g"})
+
+
 def test_google_result_title(load_sample_result):
     result = GoogleResult(load_sample_result)
     assert result.title == "A Simple PDF File"
@@ -93,3 +100,8 @@ def test_do_download_is_True(load_sample_result):
 def test_do_download_is_False(load_sample_result_no_pdf):
     result = GoogleResult(load_sample_result_no_pdf)
     assert not result.do_download
+
+
+def test_handles_people_also_ask_result(load_people_also_ask):
+    result = GoogleResult(load_people_also_ask)
+    assert result.primary_link is not None

@@ -78,6 +78,9 @@ class GoogleResult:
             if link.text == "Similar":
                 # skip similar links, they go to other searchers
                 continue
+            if link.text == "Feedback":
+                # assume this is the People aslo ask result
+                links.append("People also Ask result")
             if "http" not in link["href"].lower():
                 continue
             # need to filter out query string for downloading
