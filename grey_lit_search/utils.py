@@ -33,13 +33,13 @@ headers = {
 }
 
 
-def save_pdf(search_num, link, pdf_dir="pdfs", timeout=60):
+def save_pdf(search_num, link, base_dir="output", timeout=60):
     """
     given a pdf link download the pdf into a subfolder
     based on the search number
     """
 
-    save_dir = os.path.join(pdf_dir, f"{str(search_num).zfill(3)}")
+    save_dir = os.path.join(base_dir, f"{str(search_num).zfill(3)}")
     os.makedirs(save_dir, exist_ok=True)
     fname = os.path.join(save_dir, os.path.basename(link))
     logger.info(f"attempting to download {fname}")
@@ -92,13 +92,13 @@ def write_fail_msg(fname, link):
         fid.writelines(msg)
 
 
-def save_link(search_num, link, pdf_dir="pdfs"):
+def save_link(search_num, link, base_dir="output"):
     """
     given a link that we are not going to download, save the
     link to a text file so the user knows what the link was
     """
 
-    save_dir = os.path.join(pdf_dir, f"{str(search_num).zfill(3)}")
+    save_dir = os.path.join(base_dir, f"{str(search_num).zfill(3)}")
     os.makedirs(save_dir, exist_ok=True)
     fname = os.path.join(save_dir, "website_link.txt")
     logger.info(f"saving link to {fname}")
