@@ -110,3 +110,28 @@ def test_save_link(setup):
     with open(expected_file, "r") as fid:
         saved_link = fid.readline()
     assert saved_link == link
+
+
+def test_get_webpage():
+    result = utl.get_webpage("https://google.com")
+    assert result[0:15] == "<!doctype html>"
+    assert result[-7:] == "</html>"
+
+
+def test_save_google_search(setup):
+    url = "http://fakesite.com/fake_url/"
+    webpage_text = "fake webpage content"
+    utl.save_google_search(url, webpage_text, base_dir="tests/test_output")
+    expected_search_file = "tests/test_output/google-search-term.txt"
+    assert os.path.isfile(expected_search_file)
+
+    with open(expected_search_file, "r") as fid:
+        expected_term = fid.readline()
+    assert expected_term == url
+
+    expected_content_file = "tests/test_output/google-search-result.html"
+    assert os.path.isfile(expected_content_file)
+
+    with open(expected_content_file, "r") as fid:
+        expected_content = fid.readlines()
+    assert expected_content == [webpage_text]

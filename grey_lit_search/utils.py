@@ -105,3 +105,19 @@ def save_link(search_num, link, base_dir="output"):
 
     with open(fname, "w") as fid:
         fid.writelines(link)
+
+
+def get_webpage(url):
+    webpage = requests.get(url, headers=headers)
+    return webpage.text
+
+
+def save_google_search(url, webpage_text, base_dir="output"):
+    os.makedirs(base_dir, exist_ok=True)
+    fname = os.path.join(base_dir, "google-search-term.txt")
+    with open(fname, "w") as fid:
+        fid.write(url)
+
+    fname = os.path.join(base_dir, "google-search-result.html")
+    with open(fname, "w") as fid:
+        fid.write(webpage_text)
