@@ -99,3 +99,14 @@ def test_save_pdf_captures_timeouterror(mock_requests, setup):
         " please manually download using the link below\n"
     )
     assert lines[1] == link
+
+
+def test_save_link(setup):
+    search_num = 4
+    link = "http://fakesite.com/fake_url/"
+    utl.save_link(search_num, link, pdf_dir="tests/test_output")
+    expected_file = "tests/test_output/004/website_link.txt"
+    assert os.path.isfile(expected_file)
+    with open(expected_file, "r") as fid:
+        saved_link = fid.readline()
+    assert saved_link == link

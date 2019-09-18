@@ -91,3 +91,17 @@ def write_fail_msg(fname, link):
         msg = "recieved 404 error when trying to download\n" f"{link}"
         fid.writelines(msg)
 
+
+def save_link(search_num, link, pdf_dir="pdfs"):
+    """
+    given a link that we are not going to download, save the
+    link to a text file so the user knows what the link was
+    """
+
+    save_dir = os.path.join(pdf_dir, f"{str(search_num).zfill(3)}")
+    os.makedirs(save_dir, exist_ok=True)
+    fname = os.path.join(save_dir, "website_link.txt")
+    logger.info(f"saving link to {fname}")
+
+    with open(fname, "w") as fid:
+        fid.writelines(link)
