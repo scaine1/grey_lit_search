@@ -58,12 +58,12 @@ def test_write_fail_message_msg_is_correct(setup):
 
 
 @mock.patch("grey_lit_search.utils.requests.get")
-def test_save_link_saves_pdf(mock_requests, setup):
+def test_save_pdf_saves_pdf(mock_requests, setup):
     # mock_requests().status_code.return_value = 200
     mock_requests().raise_for_status.return_value = None
     mock_requests().content = b"fake byte data"
     link = "http://fakesite.com/fake.pdf"
-    utl.save_link(0, link, pdf_dir="tests/test_output/pdfs")
+    utl.save_pdf(0, link, pdf_dir="tests/test_output/pdfs")
     expected_file = "tests/test_output/pdfs/000/fake.pdf"
     assert os.path.isfile(expected_file)
     with open(expected_file, "rb") as fid:
@@ -71,12 +71,12 @@ def test_save_link_saves_pdf(mock_requests, setup):
 
 
 @mock.patch("grey_lit_search.utils.requests.get")
-def test_save_link_captures_httperror(mock_requests, setup):
+def test_save_pdf_captures_httperror(mock_requests, setup):
     mock_resp = requests.models.Response()
     mock_resp.status_code = 404
     mock_requests.return_value = mock_resp
     link = "http://fakesite.com/fake.pdf"
-    utl.save_link(0, link, pdf_dir="tests/test_output/pdfs")
+    utl.save_pdf(0, link, pdf_dir="tests/test_output/pdfs")
     expected_file = "tests/test_output/pdfs/000/fake.pdf.404error.txt"
     assert os.path.isfile(expected_file)
     with open(expected_file, "r") as fid:
@@ -86,10 +86,10 @@ def test_save_link_captures_httperror(mock_requests, setup):
 
 
 @mock.patch("grey_lit_search.utils.requests.get")
-def test_save_link_captures_timeouterror(mock_requests, setup):
+def test_save_pdf_captures_timeouterror(mock_requests, setup):
     mock_requests.side_effect = requests.exceptions.Timeout
     link = "http://fakesite.com/fake.pdf"
-    utl.save_link(0, link, pdf_dir="tests/test_output/pdfs")
+    utl.save_pdf(0, link, pdf_dir="tests/test_output/pdfs")
     expected_file = "tests/test_output/pdfs/000/fake.pdf.timedout.txt"
     assert os.path.isfile(expected_file)
     with open(expected_file, "r") as fid:

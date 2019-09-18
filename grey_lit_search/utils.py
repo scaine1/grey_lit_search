@@ -33,7 +33,7 @@ headers = {
 }
 
 
-def save_link(search_num, link, pdf_dir="pdfs", timeout=60):
+def save_pdf(search_num, link, pdf_dir="pdfs", timeout=60):
     """
     given a pdf link download the pdf into a subfolder
     based on the search number
