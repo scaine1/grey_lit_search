@@ -62,16 +62,16 @@ class GoogleResult:
         return self.get_title()
 
     @property
-    def pdf_links(self):
+    def primary_link(self):
         """
         There can be multiple links in a search results.
         e.g. to cached values etc.
-        Want to make sure we only get links to pdfs
+        Want to make sure we only get the primary link
         """
 
-        pdf_links = []
+        links = []
         for link in self.get_links():
-            if not ".pdf" in link["href"].lower():
+            if "http" not in link["href"].lower():
                 continue
             # ignore cached results as they may double up results
             if "webcache" in link["href"].lower():
@@ -82,11 +82,11 @@ class GoogleResult:
             # need to filter out query string for downloading
             qindx = link["href"].find("?")
             if qindx > 0:
-                pdf_links.append(link["href"][0:qindx])
+                links.append(link["href"][0:qindx])
             else:
-                pdf_links.append(link["href"])
-
-        return pdf_links
+                links.append(link["href"])
+        assert len(links) == 1
+        return links[0]
 
 
 def get_search_results(webpage):

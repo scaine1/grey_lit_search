@@ -37,16 +37,14 @@ def test_google_result_links(load_sample_result):
     assert len(result.get_links()) == 4
 
 
-def test_google_result_pdf_links(load_sample_result):
+def test_google_result_primary_link(load_sample_result):
     result = GoogleResult(load_sample_result)
-    assert len(result.pdf_links) == 1
-    assert result.pdf_links[0] == "http://www.africau.edu/images/default/sample.pdf"
+    assert result.primary_link == "http://www.africau.edu/images/default/sample.pdf"
 
 
-def test_google_result_pdf_links_remove_query_string(load_sample_result_with_query):
+def test_google_result_primary_link_remove_query_string(load_sample_result_with_query):
     result = GoogleResult(load_sample_result_with_query)
-    assert len(result.pdf_links) == 1
-    assert result.pdf_links[0] == "http://www.africau.edu/images/default/sample.pdf"
+    assert result.primary_link == "http://www.africau.edu/images/default/sample.pdf"
 
 
 def test_get_number_of_individual_search_results(load_sample_search):
