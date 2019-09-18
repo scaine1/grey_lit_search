@@ -72,13 +72,13 @@ class GoogleResult:
 
         links = []
         for link in self.get_links():
-            if "http" not in link["href"].lower():
-                continue
             # ignore cached results as they may double up results
             if "webcache" in link["href"].lower():
                 continue
             if link.text == "Similar":
                 # skip similar links, they go to other searchers
+                continue
+            if "http" not in link["href"].lower():
                 continue
             # need to filter out query string for downloading
             qindx = link["href"].find("?")
