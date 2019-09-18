@@ -33,6 +33,27 @@ headers = {
 }
 
 
+def results_summary(func, *args, **kwargs):
+    """
+    Decorator to allow the saving of link text
+    to a summary file as we go
+    """
+
+    def inner(*args, **kwargs):
+        search_num, link = args
+        base_dir = kwargs["base_dir"]
+        os.makedirs(base_dir, exist_ok=True)
+        summary_file = os.path.join(base_dir, "results_summary.txt")
+        with open(summary_file, "a") as fid:
+            if ".pdf" in link.lower():
+                link = os.path.basename(link)
+            fid.writelines(f"{str(search_num).zfill(3)}: {link}\n")
+        func(*args, **kwargs)
+
+    return inner
+
+
+@results_summary
 def save_pdf(search_num, link, base_dir="output", timeout=60):
     """
     given a pdf link download the pdf into a subfolder
@@ -51,7 +72,7 @@ def save_pdf(search_num, link, base_dir="output", timeout=60):
             fid.write(page.content)
         logger.info(f"    {fname} saved")
     except requests.exceptions.HTTPError:
-        logger.error(f"posted link does not exit")
+        logger.error(f"link does not exit")
         write_fail_msg(fname, link)
     except requests.exceptions.Timeout as e:
         logger.warning(f"download failed with error {e}")
@@ -92,6 +113,7 @@ def write_fail_msg(fname, link):
         fid.writelines(msg)
 
 
+@results_summary
 def save_link(search_num, link, base_dir="output"):
     """
     given a link that we are not going to download, save the

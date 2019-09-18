@@ -135,3 +135,34 @@ def test_save_google_search(setup):
     with open(expected_content_file, "r") as fid:
         expected_content = fid.readlines()
     assert expected_content == [webpage_text]
+
+
+@mock.patch("grey_lit_search.utils.requests.get")
+def test_results_summary(mock_requests, setup):
+    mock_requests().raise_for_status.return_value = None
+    mock_requests().content = b"fake byte data"
+    utl.save_pdf(0, "http://fakesite.com/fake0.pdf", base_dir="tests/test_output/")
+    utl.save_link(1, "http://fakesite.com/fake_url1/", base_dir="tests/test_output")
+    utl.save_pdf(2, "http://fakesite.com/fake2.pdf", base_dir="tests/test_output/")
+    utl.save_link(3, "http://fakesite.com/fake_url3/", base_dir="tests/test_output")
+    utl.save_pdf(4, "http://fakesite.com/fake4.pdf", base_dir="tests/test_output/")
+    utl.save_link(5, "http://fakesite.com/fake_url5/", base_dir="tests/test_output")
+    utl.save_link(6, "http://fakesite.com/fake_url6/", base_dir="tests/test_output")
+    utl.save_pdf(7, "http://fakesite.com/fake7.pdf", base_dir="tests/test_output/")
+    utl.save_pdf(8, "http://fakesite.com/fake8.pdf", base_dir="tests/test_output/")
+
+    expected_summary = "tests/test_output/results_summary.txt"
+    assert os.path.isfile(expected_summary)
+    with open(expected_summary, "r") as fid:
+        summary = fid.readlines()
+    assert summary == [
+        "000: fake0.pdf\n",
+        "001: http://fakesite.com/fake_url1/\n",
+        "002: fake2.pdf\n",
+        "003: http://fakesite.com/fake_url3/\n",
+        "004: fake4.pdf\n",
+        "005: http://fakesite.com/fake_url5/\n",
+        "006: http://fakesite.com/fake_url6/\n",
+        "007: fake7.pdf\n",
+        "008: fake8.pdf\n",
+    ]
