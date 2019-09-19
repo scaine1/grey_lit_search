@@ -1,7 +1,10 @@
 import os
+from datetime import datetime
 import logging
 
 import requests
+
+from .google import get_search_results
 
 """
 Copyright 2019 Simon Caine
@@ -143,3 +146,16 @@ def save_google_search(url, webpage_text, base_dir="output"):
     fname = os.path.join(base_dir, "google-search-result.html")
     with open(fname, "w") as fid:
         fid.write(webpage_text)
+
+
+def search_and_download(url):  # pragma: no cover
+    search_time = f"{datetime.utcnow():%Y%m%d_%H%M%S}"
+    webpage = get_webpage(url)
+    save_google_search(url, webpage, base_dir=search_time)
+
+    for indx, search in enumerate(get_search_results(webpage)):
+        if search.do_download:
+            save_pdf(indx, search.primary_link, base_dir=search_time)
+        else:
+            save_link(indx, search.primary_link, base_dir=search_time)
+
