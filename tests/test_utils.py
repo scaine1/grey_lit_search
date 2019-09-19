@@ -7,6 +7,7 @@ import pytest
 import requests
 from requests.exceptions import HTTPError
 import grey_lit_search.utils as utl
+from grey_lit_search.google import get_search_results
 
 test_dir = Path(__file__).resolve().parent.joinpath("test_data")
 
@@ -112,10 +113,14 @@ def test_save_link(setup):
     assert saved_link == link
 
 
-def test_get_webpage():
-    result = utl.get_webpage("https://google.com")
-    assert result[0:15] == "<!doctype html>"
-    assert result[-7:] == "</html>"
+def test_get_webpage_with_results(setup):
+    url = "https://www.google.com/search?q=sample+pdf"
+    webpage = utl.get_webpage(url, results=2, base_dir="tests/test_output")
+    assert len(list(get_search_results(webpage))) == 2
+
+    webpage = utl.get_webpage(url, results=100, base_dir="tests/test_output")
+    # annoyingly the People also ask and related count when near 100 searchs
+    assert len(list(get_search_results(webpage))) >= 98
 
 
 def test_save_google_search(setup):

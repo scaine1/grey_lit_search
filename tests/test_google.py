@@ -70,7 +70,7 @@ def test_google_result_primary_link_remove_query_string(load_sample_result_with_
 
 def test_get_number_of_individual_search_results(load_sample_search):
     search_generator = get_search_results(load_sample_search)
-    assert len(list(search_generator)) == 11
+    assert len(list(search_generator)) == 10
 
 
 def test_individual_search_results(load_sample_search):
@@ -87,7 +87,6 @@ def test_individual_search_results(load_sample_search):
         "Prince - Sample Documents - Prince XML",
         "PDF Bean Inc. - PDF Samples- Convert Word, Excel, PowerPoint to ...",
         "PDF Test Page",
-        None,
     ]
     assert titles == expected_titles
 
@@ -104,4 +103,4 @@ def test_do_download_is_False(load_sample_result_no_pdf):
 
 def test_handles_people_also_ask_result(load_people_also_ask):
     result = GoogleResult(load_people_also_ask)
-    assert result.primary_link is not None
+    assert result.primary_link is None

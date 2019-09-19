@@ -78,9 +78,6 @@ class GoogleResult:
             if link.text == "Similar":
                 # skip similar links, they go to other searchers
                 continue
-            if link.text == "Feedback":
-                # assume this is the People aslo ask result
-                links.append("People also Ask result")
             if "http" not in link["href"].lower():
                 continue
             # need to filter out query string for downloading
@@ -89,8 +86,8 @@ class GoogleResult:
                 links.append(link["href"][0:qindx])
             else:
                 links.append(link["href"])
-        assert len(links) == 1
-        return links[0]
+        if links:
+            return links[0]
 
     @property
     def do_download(self):
@@ -102,7 +99,7 @@ class GoogleResult:
         """
 
         dl = False
-        if ".pdf" in os.path.basename(self.primary_link).lower():
+        if os.path.basename(self.primary_link).lower().endswith(".pdf"):
             dl = True
         return dl
 
@@ -121,4 +118,6 @@ def get_search_results(webpage):
     logger.info(f"Found {len(results)} results, processing now")
     for result in results:
         googleresult = GoogleResult(result)
-        yield googleresult
+        if googleresult.title is not None:
+            # no title is a People also Ask or Related Search, we ignore these
+            yield googleresult

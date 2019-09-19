@@ -48,7 +48,7 @@ def results_summary(func, *args, **kwargs):
         os.makedirs(base_dir, exist_ok=True)
         summary_file = os.path.join(base_dir, "results_summary.txt")
         with open(summary_file, "a") as fid:
-            if ".pdf" in link.lower():
+            if link.lower().endswith(".pdf"):
                 link = os.path.basename(link)
             fid.writelines(f"{str(search_num).zfill(3)}: {link}\n")
         func(*args, **kwargs)
@@ -132,8 +132,11 @@ def save_link(search_num, link, base_dir="output"):
         fid.writelines(link)
 
 
-def get_webpage(url):
+def get_webpage(url, results=100, base_dir="output"):
+    # to do, warn that we cannot have results > 100
+    url += f"&num={results}"
     webpage = requests.get(url, headers=headers)
+    save_google_search(url, webpage.text, base_dir=base_dir)
     return webpage.text
 
 
@@ -148,10 +151,9 @@ def save_google_search(url, webpage_text, base_dir="output"):
         fid.write(webpage_text)
 
 
-def search_and_download(url):  # pragma: no cover
+def search_and_download(url, results=100):  # pragma: no cover
     search_time = f"{datetime.utcnow():%Y%m%d_%H%M%S}"
-    webpage = get_webpage(url)
-    save_google_search(url, webpage, base_dir=search_time)
+    webpage = get_webpage(url, results=results, base_dir=search_time)
 
     for indx, search in enumerate(get_search_results(webpage)):
         if search.do_download:
