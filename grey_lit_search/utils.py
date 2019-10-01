@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 import logging
+import warnings
 
 import requests
 
@@ -34,6 +35,10 @@ logger = logging.getLogger(__name__)
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
 }
+
+
+class SearchWarning(UserWarning):
+    pass
 
 
 def results_summary(func, *args, **kwargs):
@@ -134,6 +139,14 @@ def save_link(search_num, link, base_dir="output"):
 
 def get_webpage(url, results=100, base_dir="output"):
     # to do, warn that we cannot have results > 100
+    if results > 100:
+        warnings.warn(
+            SearchWarning(
+                "More than 100 search results not implemented, setting to 100"
+            )
+        )
+        results = 100
+
     url += f"&num={results}"
     webpage = requests.get(url, headers=headers)
     save_google_search(url, webpage.text, base_dir=base_dir)

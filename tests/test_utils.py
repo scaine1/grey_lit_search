@@ -171,3 +171,10 @@ def test_results_summary(mock_requests, setup):
         "007: fake7.pdf\n",
         "008: fake8.pdf\n",
     ]
+
+
+def test_warns_cant_have_more_than_100_results(setup):
+    url = "https://www.google.com/search?q=sample+pdf"
+
+    with pytest.warns(utl.SearchWarning) as warnings:
+        webpage = utl.get_webpage(url, results=101, base_dir="tests/test_output")
