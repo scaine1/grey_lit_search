@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+import click
+
+from grey_lit_search import search_and_download
+
+@click.command()
+@click.option("--url", "-u", required=True)
+@click.option("--results", "-r", type=int,  default=100)
+def main(url, results):
+    search_and_download(url, results)
+
+if __name__ == "__main__":
+    main()
