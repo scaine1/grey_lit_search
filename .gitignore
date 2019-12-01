@@ -4,3 +4,7 @@ __pycache__
 htmlcov/
 .coverage
 *.log
+build/
+.DS_store
+dist/
+grey_lit_search.egg-info/
