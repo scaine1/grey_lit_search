@@ -54,7 +54,7 @@ def results_summary(func, *args, **kwargs):
         base_dir = kwargs["base_dir"]
         os.makedirs(base_dir, exist_ok=True)
         summary_file = os.path.join(base_dir, "results_summary.txt")
-        with open(summary_file, "a") as fid:
+        with open(summary_file, "a", encoding="utf-8") as fid:
             if link.lower().endswith(".pdf"):
                 link = os.path.basename(link)
             fid.writelines(f"{str(search_num).zfill(3)}: {link}\n")
@@ -104,7 +104,7 @@ def write_timeout_msg(fname, link):
 
     os.makedirs(os.path.dirname(fname), exist_ok=True)
 
-    with open(fname + ".timedout.txt", "w") as fid:
+    with open(fname + ".timedout.txt", "w", encoding="utf-8") as fid:
         msg = (
             "timed out when trying to download,"
             " please manually download using the link below\n"
@@ -121,7 +121,7 @@ def write_fail_msg(fname, link):
 
     os.makedirs(os.path.dirname(fname), exist_ok=True)
 
-    with open(fname + ".404error.txt", "w") as fid:
+    with open(fname + ".404error.txt", "w", encoding="utf-8") as fid:
         msg = "recieved 404 error when trying to download\n" f"{link}"
         fid.writelines(msg)
 
@@ -134,7 +134,7 @@ def write_generic_fail_msg(fname, link):
 
     os.makedirs(os.path.dirname(fname), exist_ok=True)
 
-    with open(fname + ".failed.txt", "w") as fid:
+    with open(fname + ".failed.txt", "w", encoding="utf-8") as fid:
         msg = "recieved an error when trying to download\n" f"{link}"
         fid.writelines(msg)
 
@@ -151,7 +151,7 @@ def save_link(search_num, link, base_dir="output"):
     fname = os.path.join(save_dir, "website_link.txt")
     logger.info(f"saving link to {fname}")
 
-    with open(fname, "w") as fid:
+    with open(fname, "w", encoding="utf-8") as fid:
         fid.writelines(link)
 
 
@@ -174,11 +174,11 @@ def get_webpage(url, results=100, base_dir="output"):
 def save_google_search(url, webpage_text, base_dir="output"):
     os.makedirs(base_dir, exist_ok=True)
     fname = os.path.join(base_dir, "google-search-term.txt")
-    with open(fname, "w") as fid:
+    with open(fname, "w", encoding="utf-8") as fid:
         fid.write(url)
 
     fname = os.path.join(base_dir, "google-search-result.html")
-    with open(fname, "w") as fid:
+    with open(fname, "w", encoding="utf-8") as fid:
         fid.write(webpage_text)
 
 
