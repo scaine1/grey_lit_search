@@ -55,8 +55,6 @@ def results_summary(func, *args, **kwargs):
         os.makedirs(base_dir, exist_ok=True)
         summary_file = os.path.join(base_dir, "results_summary.txt")
         with open(summary_file, "a", encoding="utf-8") as fid:
-            if link.lower().endswith(".pdf"):
-                link = os.path.basename(link)
             fid.writelines(f"{str(search_num).zfill(3)}: {link}\n")
         func(*args, **kwargs)
 
