@@ -26,7 +26,7 @@ If you installed python via anaconda then open the anaconda prompt (search in wi
 Say what the step will be
 
 ```
-git clone git@github.com:scaine1/grey_lit_search.git
+git clone https://github.com/scaine1/grey_lit_search.git
 ```
 
 This should have created a directory called grey\_lit\_search. Go into the directory
