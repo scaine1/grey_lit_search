@@ -178,3 +178,15 @@ def test_warns_cant_have_more_than_100_results(setup):
 
     with pytest.warns(utl.SearchWarning) as warnings:
         webpage = utl.get_webpage(url, results=101, base_dir="tests/test_output")
+
+
+@mock.patch("grey_lit_search.utils.requests.get")
+def test_write_generic_fail_msg(mock_requests, setup):
+    mock_requests.side_effect = requests.exceptions.SSLError
+    fname = "tests/test_output/pdfs/000/fail.pdf"
+    link = "https:failsite.com/fail.pdf"
+    utl.save_pdf(0, link, base_dir="tests/test_output/pdfs")
+    with open(f"{fname}.failed.txt", "r") as fid:
+        lines = fid.readlines()
+    assert lines[0] == ("recieved an error when trying to download\n")
+    assert lines[1] == link

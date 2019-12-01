@@ -87,6 +87,9 @@ def save_pdf(search_num, link, base_dir="output", timeout=60):
     except requests.exceptions.Timeout as e:
         logger.warning(f"download failed with error {e}")
         write_timeout_msg(fname, link)
+    except Exception as e:
+        logger.warning(f"download failed with error {e}")
+        write_generic_fail_msg(fname, link)
 
 
 def write_timeout_msg(fname, link):
@@ -120,6 +123,19 @@ def write_fail_msg(fname, link):
 
     with open(fname + ".404error.txt", "w") as fid:
         msg = "recieved 404 error when trying to download\n" f"{link}"
+        fid.writelines(msg)
+
+
+def write_generic_fail_msg(fname, link):
+    """
+    Create a file in liew of the correct one that lets the user
+    know the requested download/save failed
+    """
+
+    os.makedirs(os.path.dirname(fname), exist_ok=True)
+
+    with open(fname + ".failed.txt", "w") as fid:
+        msg = "recieved an error when trying to download\n" f"{link}"
         fid.writelines(msg)
 
 
@@ -175,4 +191,3 @@ def search_and_download(url, results=100):  # pragma: no cover
             save_pdf(indx, search.primary_link, base_dir=search_time)
         else:
             save_link(indx, search.primary_link, base_dir=search_time)
-
