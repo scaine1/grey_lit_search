@@ -22,4 +22,5 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=['beautifulsoup4', 'requests', 'click'],
-    scripts=['bin/greysearch'])
+    entry_points={'console_scripts': ['greysearch = grey_lit_search.greysearch: greysearch']},
+    )

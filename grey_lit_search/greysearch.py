@@ -28,8 +28,8 @@ logger = logging.getLogger(__name__)
 @click.command()
 @click.option("--url", "-u", required=True)
 @click.option("--results", "-r", type=int,  default=100)
-def main(url, results):
+def greysearch(url, results):
     search_and_download(url, results)
 
 if __name__ == "__main__":
-    main()
+    greysearch()
