@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 import logging
 import warnings
+from functools import wraps
 
 import requests
 
@@ -47,6 +48,7 @@ def results_summary(func, *args, **kwargs):
     to a summary file as we go
     """
 
+    @wraps(func)
     def inner(*args, **kwargs):
         search_num, link = args
         base_dir = kwargs["base_dir"]
