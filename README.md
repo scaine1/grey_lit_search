@@ -23,8 +23,6 @@ This will require the use of terminal or some form of command line interface.
 
 If you installed python via anaconda then open the anaconda prompt (search in windows for anaconda prompt)
 
-Say what the step will be
-
 ```
 git clone https://github.com/scaine1/grey_lit_search.git
 ```
