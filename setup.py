@@ -21,5 +21,5 @@ setup(
         'Programming Language :: Python :: 3'
     ],
     python_requires='>=3.6',
-    install_requires=['beautifulsoup4>=4.6.0', 'requests>=2.22.0', 'click>=7.0'],
+    install_requires=['beautifulsoup4', 'requests', 'click'],
     scripts=['bin/greysearch'])
