@@ -50,6 +50,10 @@ def results_summary(search_num, title, link, base_dir="output"):
 
     os.makedirs(base_dir, exist_ok=True)
     summary_file = os.path.join(base_dir, "results_summary.csv")
+    if not os.path.isfile(summary_file):
+        with open(summary_file, "w", encoding="utf-8") as fid:
+            fid.writelines(f"search number, title, link\n")
+
     with open(summary_file, "a", encoding="utf-8") as fid:
         fid.writelines(f"{str(search_num).zfill(3)}, {title}, {link}\n")
 

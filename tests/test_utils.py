@@ -179,6 +179,7 @@ def test_results_summary(mock_requests, setup):
     with open(expected_summary, "r") as fid:
         summary = fid.readlines()
     assert summary == [
+        "search number, title, link\n",
         "000, title0, http://fakesite.com/fake0.pdf\n",
         "001, title1, http://fakesite.com/fake_url1/\n",
         "002, title2, http://fakesite.com/fake2.pdf\n",
