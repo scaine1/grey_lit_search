@@ -146,30 +146,48 @@ def test_save_google_search(setup):
 def test_results_summary(mock_requests, setup):
     mock_requests().raise_for_status.return_value = None
     mock_requests().content = b"fake byte data"
-    utl.save_pdf(0, "http://fakesite.com/fake0.pdf", base_dir="tests/test_output/")
-    utl.save_link(1, "http://fakesite.com/fake_url1/", base_dir="tests/test_output")
-    utl.save_pdf(2, "http://fakesite.com/fake2.pdf", base_dir="tests/test_output/")
-    utl.save_link(3, "http://fakesite.com/fake_url3/", base_dir="tests/test_output")
-    utl.save_pdf(4, "http://fakesite.com/fake4.pdf", base_dir="tests/test_output/")
-    utl.save_link(5, "http://fakesite.com/fake_url5/", base_dir="tests/test_output")
-    utl.save_link(6, "http://fakesite.com/fake_url6/", base_dir="tests/test_output")
-    utl.save_pdf(7, "http://fakesite.com/fake7.pdf", base_dir="tests/test_output/")
-    utl.save_pdf(8, "http://fakesite.com/fake8.pdf", base_dir="tests/test_output/")
+    utl.results_summary(
+        0, "title0", "http://fakesite.com/fake0.pdf", base_dir="tests/test_output/"
+    )
+    utl.results_summary(
+        1, "title1", "http://fakesite.com/fake_url1/", base_dir="tests/test_output"
+    )
+    utl.results_summary(
+        2, "title2", "http://fakesite.com/fake2.pdf", base_dir="tests/test_output/"
+    )
+    utl.results_summary(
+        3, "title3", "http://fakesite.com/fake_url3/", base_dir="tests/test_output"
+    )
+    utl.results_summary(
+        4, "title4", "http://fakesite.com/fake4.pdf", base_dir="tests/test_output/"
+    )
+    utl.results_summary(
+        5, "title5", "http://fakesite.com/fake_url5/", base_dir="tests/test_output"
+    )
+    utl.results_summary(
+        6, "title6", "http://fakesite.com/fake_url6/", base_dir="tests/test_output"
+    )
+    utl.results_summary(
+        7, "title7", "http://fakesite.com/fake7.pdf", base_dir="tests/test_output/"
+    )
+    utl.results_summary(
+        8, "title8", "http://fakesite.com/fake8.pdf", base_dir="tests/test_output/"
+    )
 
-    expected_summary = "tests/test_output/results_summary.txt"
+    expected_summary = "tests/test_output/results_summary.csv"
     assert os.path.isfile(expected_summary)
     with open(expected_summary, "r") as fid:
         summary = fid.readlines()
     assert summary == [
-        "000: http://fakesite.com/fake0.pdf\n",
-        "001: http://fakesite.com/fake_url1/\n",
-        "002: http://fakesite.com/fake2.pdf\n",
-        "003: http://fakesite.com/fake_url3/\n",
-        "004: http://fakesite.com/fake4.pdf\n",
-        "005: http://fakesite.com/fake_url5/\n",
-        "006: http://fakesite.com/fake_url6/\n",
-        "007: http://fakesite.com/fake7.pdf\n",
-        "008: http://fakesite.com/fake8.pdf\n",
+        "000, title0, http://fakesite.com/fake0.pdf\n",
+        "001, title1, http://fakesite.com/fake_url1/\n",
+        "002, title2, http://fakesite.com/fake2.pdf\n",
+        "003, title3, http://fakesite.com/fake_url3/\n",
+        "004, title4, http://fakesite.com/fake4.pdf\n",
+        "005, title5, http://fakesite.com/fake_url5/\n",
+        "006, title6, http://fakesite.com/fake_url6/\n",
+        "007, title7, http://fakesite.com/fake7.pdf\n",
+        "008, title8, http://fakesite.com/fake8.pdf\n",
     ]
 
 

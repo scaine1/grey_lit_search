@@ -42,26 +42,18 @@ class SearchWarning(UserWarning):
     pass
 
 
-def results_summary(func, *args, **kwargs):
+def results_summary(search_num, title, link, base_dir="output"):
     """
-    Decorator to allow the saving of link text
+    save the search_num, title and link text
     to a summary file as we go
     """
 
-    @wraps(func)
-    def inner(*args, **kwargs):
-        search_num, link = args
-        base_dir = kwargs["base_dir"]
-        os.makedirs(base_dir, exist_ok=True)
-        summary_file = os.path.join(base_dir, "results_summary.txt")
-        with open(summary_file, "a", encoding="utf-8") as fid:
-            fid.writelines(f"{str(search_num).zfill(3)}: {link}\n")
-        func(*args, **kwargs)
-
-    return inner
+    os.makedirs(base_dir, exist_ok=True)
+    summary_file = os.path.join(base_dir, "results_summary.csv")
+    with open(summary_file, "a", encoding="utf-8") as fid:
+        fid.writelines(f"{str(search_num).zfill(3)}, {title}, {link}\n")
 
 
-@results_summary
 def save_pdf(search_num, link, base_dir="output", timeout=60):
     """
     given a pdf link download the pdf into a subfolder
@@ -137,7 +129,6 @@ def write_generic_fail_msg(fname, link):
         fid.writelines(msg)
 
 
-@results_summary
 def save_link(search_num, link, base_dir="output"):
     """
     given a link that we are not going to download, save the
@@ -185,6 +176,7 @@ def search_and_download(url, results=100):  # pragma: no cover
     webpage = get_webpage(url, results=results, base_dir=search_time)
 
     for indx, search in enumerate(get_search_results(webpage)):
+        results_summary(indx, search.title, search.primary_link, base_dir=search_time)
         if search.do_download:
             save_pdf(indx, search.primary_link, base_dir=search_time)
         else:
