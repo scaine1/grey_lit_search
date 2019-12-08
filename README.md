@@ -17,11 +17,26 @@ go to  https://www.anaconda.com/distribution/ and download for your operating sy
 
 ### Installing
 
-To install from source  code, clone or download a copy of the repository and install via setup.py
-
 This will require the use of terminal or some form of command line interface.
 
+First create a directory where you want the files to be downloaded. Perhaps a folder called grey_lit_search in your home directory or documents folder (Avoid using spaces in your names, while you can get things to work it will cause numerious hassles when working in terminal)
+
+#### Windows users
 If you installed python via anaconda then open the anaconda prompt (search in windows for anaconda prompt)
+
+#### Mac OSX users
+open the terminal program, click the launch pad icon and type "terminal" into the search box
+
+#### navigate to the directory you created in the terminal program
+in order to navigate to your directory can use the "change directory" command, which is 
+```
+cd grey_lit_search
+```
+
+This may be frustrating or intimidating for those who have not used terminal before. If you are having trouble you may want to do a quick goolge search and find a tutorial on how to navigate within the terminal
+
+#### clone the source code
+One you have navigated to the directory you can run the following command to pull down the source code
 
 ```
 git clone https://github.com/scaine1/grey_lit_search.git
@@ -32,6 +47,11 @@ This should have created a directory called grey\_lit\_search. Go into the direc
 ```
 cd grey_lit_search
 ```
+If you get an error here and it looks like the error is saying you do not have git on your system.
+Follow the relevent instructions for your OS at https://www.atlassian.com/git/tutorials/install-git
+
+
+#### install via setup.py
 
 Then install via the following command
 
@@ -40,6 +60,10 @@ python setup.py install
 ```
 
 This should have installed the grey\_lit\_search package on your system. Including an executable script called greysearch which you can run in the anaconda prompt. See below for examples
+
+#### cleanup the source code
+You can now safely delete the directory with the source code. grey_lit_search has been installed on your system. 
+See below on how to use.
 
 
 ## How to use
