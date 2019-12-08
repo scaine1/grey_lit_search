@@ -93,9 +93,9 @@ This is your search url and is what needs to be pasted inside the quotation mark
 
 Note that there may be a lot of weird letters and numbers in the address, this is OK, copy the whole thing
 
-for example, the following URL was obtained by searching for "depression +pdf"
+for example, the following URL was obtained by searching for "depression filetype:pdf"
 
-greysearch --url "https://www.google.com.au/search?sxsrf=ACYBGNTN2I-ZiNy4qYPUnn1yfmPMg3ZFFw%3A1575175967610&ei=H0fjXZruJMq9rQHTl7_IBQ&q=depression+%2Bpdf&oq=depression+%2Bpdf&gs_l=psy-ab.3...48781.57571..57803...2.3..0.259.2314.0j13j1......0....1..gws-wiz.......0i71.frhhqm73guY&ved=0ahUKEwja-Yfg05PmAhXKXisKHdPLD1kQ4dUDCAs&uact=5"
+greysearch --url "https://www.google.com/search?q=depression+filetype%3Apdf&oq=depression+file&aqs=chrome.1.69i57j69i59j0l2j69i60l2.4361j1j7&sourceid=chrome&ie=UTF-8"
 
 
 ## Limiting the number of results
@@ -120,7 +120,7 @@ Inside the dated folder you should see the following files
 
 * google-search-term.txt
 * google-search-result.html
-* results_summary.txt
+* results_summary.csv
 * and a number of directories corresponding to your search results starting at 000
 
 ### google-search-term.txt
@@ -131,9 +131,8 @@ This is a copy of the html response google provided to your search url. You can 
 
 *please note that this is an offline copy of the the html saved at the time you did the search. Any links that exist on the page may have changed between the time you made the search and when you click on them. For example if the google search you made had a link to "my awesome myspace page" and 10 years later to click the link, "my awesome myspace page" may not actually exist anymore.
 
-### results_summary.txt
-This is a text file that contains the search result number and the link to the pdf or webpage corresponding to the search result.
-
+### results_summary.csv
+This is a text file that contains the search result number, title of the search found,  and the link to the pdf or webpage corresponding to the search result.
 
 ### search directories
 
