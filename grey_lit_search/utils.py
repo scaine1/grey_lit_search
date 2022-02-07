@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
 }
 
 
@@ -178,8 +178,12 @@ def save_google_search(url, webpage_text, base_dir="output"):
 def search_and_download(url, results=100):  # pragma: no cover
     search_time = f"{datetime.utcnow():%Y%m%d_%H%M%S}"
     webpage = get_webpage(url, results=results, base_dir=search_time)
+    if "scholar.google" in url:
+        search = "scholar"
+    else:
+        search = "google"
 
-    for indx, search in enumerate(get_search_results(webpage)):
+    for indx, search in enumerate(get_search_results(webpage, search=search)):
         results_summary(indx, search.title, search.primary_link, base_dir=search_time)
         if search.do_download:
             save_pdf(indx, search.primary_link, base_dir=search_time)
