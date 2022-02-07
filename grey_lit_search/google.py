@@ -104,17 +104,22 @@ class GoogleResult:
         return dl
 
 
-def get_search_results(webpage):
+def get_search_results(webpage, search="google"):
     """
     Break down the search into indiviual items
-    using <div class="g"
+    using <div class="g" if searching google 
+    using <div class="gs_ri" if searching google scholar
 
     Later on we will extract title and links from
     these results
     """
 
     soup_page = soup(webpage, "html.parser")
-    results = soup_page.find_all("div", {"class": "g"})
+    if search == "google":
+        results = soup_page.find_all("div", {"class": "g"})
+    elif search == "scholar":
+        results = soup_page.find_all("div", {"class": "gs_ri"})
+
     logger.info(f"Found {len(results)} results, processing now")
     for result in results:
         googleresult = GoogleResult(result)
